@@ -1,0 +1,61 @@
+todolist:                                   这是一个包含所有 训练任务 的表格
+  `id` int(11) NOT NULL AUTO_INCREMENT,     任务在表格内的编号
+  `user_id` int(11) NOT NULL,               创建该任务的用户id
+  `title` varchar(1024) NOT NULL,           任务名字
+  `status` int(2) NOT NULL COMMENT '是否完成',任务是否完成
+  `create_time` int(11) NOT NULL,            任务创建时间，唯一标识符，将作为训练过程的文件夹名称
+  `is_training` int(11) NOT NULL,               创建该任务的用户id
+
+  PRIMARY KEY (`id`)
+
+
+
+
+user:                                       这是一个存储 已经注册的用户 的表格
+
+  `id` int(11) NOT NULL AUTO_INCREMENT,     用户在表中的编号
+  `username` varchar(24) DEFAULT NULL,      用户名
+  `password` varchar(24) DEFAULT NULL,      用户密码
+  PRIMARY KEY (`id`)
+
+
+
+datalist:                                   这是一个存储 数据任务 的表格
+  `id` int(11) NOT NULL AUTO_INCREMENT,       该数据任务在表中编号
+  `user_id` int(11) NOT NULL,               创建该数据的用户的id
+  `title` varchar(1024) NOT NULL,           数据标题
+  `status` int(2) NOT NULL COMMENT '是否完成',数据是否传输完成
+  `create_time` int(11) NOT NULL,           数据创建时间,也作为该组数据的存储文件夹
+  PRIMARY KEY (`id`)
+
+
+ train_setting_list:                        这是一个存储 训练任务 详细配置信息 的表格
+   `id` int(11) NOT NULL AUTO_INCREMENT,     任务在表中编号
+  `user_id` int(11) NOT NULL,                创建者的id
+  `create_time` int(11) NOT NULL,             开始训练的时间，与todolist中不同，且无关
+  `model_class` int(11) NOT NULL,           模型种类  深度模型/机器学习模型
+  `GPU_setting` int(11) NOT NULL,           GPU的数量设置
+  `data_paths` varchar(1024) NOT NULL,      所有的选择的数据路径,datalist中create_time /aaaaaaa/bbbbbbbb/dddddd/ddd
+  `todolist_id` int(11) NOT NULL,          !!!!!!!与todolist的create_time相同，作为唯一标识符
+    ########
+    # 待完成
+    ########
+    `whether_data_augment` int(11) NOT NULL,        是否进行数据增强
+    `deep_model_class` int(11) NOT NULL,        深度模型类别
+    `ml_model_class` int(11) NOT NULL,        机器模型类别
+     `input_dim` int(11) NOT NULL,             输入维度
+     `output_dim` int(11) NOT NULL,             输出维度
+     `weight_decay` int(11) NOT NULL,             权重衰减
+
+     `learning_rate` int(11) NOT NULL,             学习率
+    `activation_class` int(11) NOT NULL,        激活函数类别
+    `layers_num` int(11) NOT NULL,             神经网络层数
+
+
+    #######
+    `optimizer` int(11) NOT NULL,             优化器
+    `net_losses` int(11) NOT NULL,             损失函数
+
+
+
+

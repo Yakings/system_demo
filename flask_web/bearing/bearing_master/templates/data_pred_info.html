@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+
+
+<head>
+    <meta charset="utf-8">
+    <title>炫酷的ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="{{ url_for('static', filename='echarts.min.js') }}"></script>
+</head>
+
+
+
+<h2 class="form-signin-heading">数据统计信息</h2>
+
+<table class="table table-hover table-bordered">
+    <!--<thead>-->
+        <!--<th class="active">名称</th>-->
+        <!--<th class="active">设置</th>-->
+        <!--<th class="active">名称</th>-->
+        <!--<th class="active">设置</th>-->
+    <!--</thead>-->
+    <tbody>
+         <tr class="info">
+                <td class="text-right">{{data_analysis[0][0]}}</td>
+                <td class="text-left">{{data_analysis[0][1]}}</td>
+
+                <td class="text-right">{{data_analysis[1][0]}}</td>
+                <td class="text-left">{{data_analysis[1][1]}}</td>
+         </tr>
+
+    </tbody>
+
+</table>
+
+
+<div id="main2" style="width: 800px;height:500px;margin: 0 auto;"></div>
+
+<div id="main2_1" style="width: 800px;height:500px;margin: 0 auto;"></div>
+
+<script type="text/javascript">
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart2 = echarts.init(document.getElementById('main2'));
+    var myChart2_1 = echarts.init(document.getElementById('main2_1'));
+
+    // 指定图表的配置项和数据
+
+              var   option2 = {
+                title : {
+                    text: '工业诊断曲线',
+                    subtext: '健康值'
+                },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['诊断结果']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+
+             dataZoom : {
+                    show : true,
+                    realtime: true,
+                    start : 50,
+                    end : 100
+                },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : {{x_axis}},
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    axisLabel : {
+                        formatter: '{value} g'
+                    }
+                }
+            ],
+            series : [
+                {
+                    name:'诊断结果',
+                    type:'line',
+                    data:{{u_data}},
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: '平均值'}
+                        ]
+                    }
+                }
+            ]
+        };
+
+
+    var   option2_1 = {
+                title : {
+                    text: '工业诊断前向平滑曲线',
+                    subtext: '健康值'
+                },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['诊断结果']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+
+             dataZoom : {
+                    show : true,
+                    realtime: true,
+                    start : 0,
+                    end : 50
+                },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : {{x_axis_f}},
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    axisLabel : {
+                        formatter: '{value} '
+                    }
+                }
+            ],
+            series : [
+                {
+                    name:'诊断结果',
+                    type:'line',
+                    data:{{frequency}},
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: '平均值'}
+                        ]
+                    }
+                }
+            ]
+        };
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart2.setOption(option2);
+    myChart2_1.setOption(option2_1);
+</script>
+
+
+{% endblock %}

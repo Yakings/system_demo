@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+
+
+
+<form method='post'>
+
+
+    <h2 class="form-signin-heading">设置模型参数</h2>
+
+<div class="row">
+
+    <div class="col-md-4 col-md-offset-4">
+
+            {{ wtf.form_field(allform.mygetForm("tag_id00"))}}
+            {{ wtf.form_field(allform.mygetForm("tag_id01"))}}
+
+
+    </div>
+    <div class="col-md-4 col-md-offset-4">
+        <h2 class="form-signin-heading"></h2>
+
+
+            {{ wtf.form_field(allform.mygetForm("tag_id013"))}}
+            <!--{{ wtf.form_field(allform.mygetForm("tag_id014"))}}-->
+            {{ wtf.form_field(allform.mygetForm("tag_id016"))}}
+            {{ wtf.form_field(allform.mygetForm("tag_id017"))}}
+    </div>
+
+</div>
+
+<h2 class="form-signin-heading">数据管理</h2>
+
+<table class="table table-hover">
+    <thead>
+        <th class="active">No</th>
+        <th class="active">数据描述</th>
+        <th class="active">是否完整</th>
+        <th class="active">创建时间</th>
+        <th class='active'>操作</th>
+        <th class='active'>选择</th>
+
+    </thead>
+    <tbody>
+        {% for todo in datalists %}
+            <!-- tr -->                    <!--danger info warning success active-->
+            {% if todo.status %} <tr class="success">
+            {% else %} <tr class="success"> {% endif %}
+                <td>{{ loop.index }}</td>
+                <td>{{ todo.title }}</td>
+                <td>{{ todo.status }}</td>
+                <td>{{ todo.create_time }}</td>
+                <td>
+                    {% if todo.status %}
+                    <a href="{{ url_for('view_data_example', id=todo.id) }}" class="btn btn-danger" role ="button">查看</a>
+                    <a href="{{ url_for('delete_data_list', id=todo.id) }}" class="btn btn-danger" role ="button">删除</a>
+                    {% else %}
+                    <a href="{{ url_for('view_data_example', id=todo.id) }}" class="btn btn-success" role ="button">查看</a>
+                    <a href="{{ url_for('delete_data_list', id=todo.id) }}" class="btn btn-success" role ="button">删除</a>
+                    {% endif %}
+                </td>
+                <td>{{ wtf.form_field(allform.mygetForm("tag_id_dym"+loop.index0|string))}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    {{ wtf.form_field(allform.submit,class="btn btn-success") }}
+</form>
+<!-- Button trigger modal -->
+<!--<blockquote class="pull-right">-->
+{% endblock %}

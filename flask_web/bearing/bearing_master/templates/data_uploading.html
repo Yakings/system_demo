@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-sm-6 col-md-offset-1">
+        <!--<font size="3" color="red">上传数据!</font>-->
+        <h2 class="form-signin-heading">上传数据</h2>
+        {{ wtf.quick_form(uploadform, form_type="horizontal") }}
+    </div>
+
+</div>
+<div class="col-sm-4 col-md-offset-1">说明：请上传压缩文件，文件存储格式为：文件夹名/csv数据文件</div>
+{% endblock %}
